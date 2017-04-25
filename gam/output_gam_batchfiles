@@ -1,0 +1,18 @@
+#!/bin/bash
+userfile="$1"
+aliasfile="$2"
+
+users=($(cat $userfile | cut -d\, -f 1,2,3))
+alias=($(cat $aliasfile))
+
+for line in "${users[@]}"
+do
+  IFS="," read -ra userdata <<< "$line"
+    echo "gam create user ${userdata[0]} firstname ${userdata[1]} lastname ${userdata[2]}" >> createusers.bat
+done
+
+for alias in "${alias[@]}"
+do
+  IFS="," read -ra aliasdata <<< "$alias"
+    echo "gam create alias ${aliasdata[0]} target ${aliasdata[1]} type ${aliasdata[2]}" >> createaliases.bat
+done
