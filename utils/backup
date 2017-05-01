@@ -1,0 +1,10 @@
+#!/bin/bash
+#simple script to backup selfdev folder
+
+
+# -a archive mode
+# -v verbose
+# -h output numbers in human readable format
+# --progress show sync progress
+
+rsync -avh --progress --log-file="/media/Dev/rsync.log" ~/selfdev/ /media/Dev/
