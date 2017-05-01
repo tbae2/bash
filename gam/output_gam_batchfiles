@@ -1,18 +1,25 @@
 #!/bin/bash
+# accept args from command call, $1 = userfile, $2 = aliases file, both csv separated
+
 userfile="$1"
 aliasfile="$2"
 
+# cut relevant columns out of files and store in arrays
 users=($(cat $userfile | cut -d\, -f 1,2,3))
 alias=($(cat $aliasfile))
 
+#loop through users array and product command batch file
 for line in "${users[@]}"
 do
+  #set internal field separator to read csv as separate fields.
   IFS="," read -ra userdata <<< "$line"
     echo "gam create user ${userdata[0]} firstname ${userdata[1]} lastname ${userdata[2]}" >> createusers.bat
 done
 
+#loop through alias array and product command batch file
 for alias in "${alias[@]}"
 do
+  #set internal field separator to read csv as separate fields.
   IFS="," read -ra aliasdata <<< "$alias"
     echo "gam create alias ${aliasdata[0]} target ${aliasdata[1]} type ${aliasdata[2]}" >> createaliases.bat
 done
