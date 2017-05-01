@@ -1,0 +1,12 @@
+#!/bin/bash
+#small script to check smart status of all installed drives on local machine
+# list the items in dev directory and pick out the drives save to array
+drivelist=($(ls /dev/ | grep -e 'sd[a-y]$'))
+
+# loop over array of drives
+for drive in "${drivelist[@]}"
+  do
+    # output , run smartctl, find relevant fields and output to console
+    echo "$drive:" &&
+    smartctl -a "/dev/$drive" | grep 'Device Model:\|User Capacity:\|Local Time is:\|SMART overall-health self-assessment test result:'
+done
